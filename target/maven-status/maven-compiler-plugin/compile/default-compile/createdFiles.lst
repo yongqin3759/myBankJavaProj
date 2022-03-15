@@ -1,5 +1,0 @@
-com\yongqin\mybank\models\Transaction.class
-com\yongqin\mybank\services\TransactionService.class
-com\yongqin\mybank\web\myBankServlet.class
-com\yongqin\mybank\ApplicationLauncher.class
-com\yongqin\mybank\context\Application.class

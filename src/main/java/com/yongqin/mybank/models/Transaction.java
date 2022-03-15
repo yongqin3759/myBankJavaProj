@@ -12,13 +12,17 @@ public class Transaction {
     private BigDecimal amount;
     private String reference;
     private String slogan;
-    private ZonedDateTime timestamp;
-
-
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mmZ")
-    private Date date;
+    private ZonedDateTime timestamp;
 
+    public ZonedDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(ZonedDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public Transaction(BigDecimal amount, ZonedDateTime timestamp, String reference, String slogan) {
         this.id = UUID.randomUUID().toString();
@@ -44,17 +48,9 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
     public String getSlogan() {
         return slogan;
-    }
-
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public String getReference() {
