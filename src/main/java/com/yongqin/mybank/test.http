@@ -11,8 +11,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "amount": 7000,
-  "reference": "higher salary"
+  "amount": 200,
+  "reference": "tuition",
+  "receivingUser": "Yong Qin"
 }
 
 ###
@@ -26,5 +27,5 @@ Accept: application/json
 }
 
 ###
-GET http://localhost:8080/transactions
+GET http://localhost:8080/account/15beefd9-d444-4119-a475-0b304c56cacf
 Accept: application/json

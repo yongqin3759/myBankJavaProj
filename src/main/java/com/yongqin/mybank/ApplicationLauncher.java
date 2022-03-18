@@ -1,7 +1,6 @@
 package com.yongqin.mybank;
 
-import com.yongqin.mybank.context.Application;
-import com.yongqin.mybank.web.myBankServlet;
+import com.yongqin.mybank.context.MyBankConfiguration;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
@@ -13,10 +12,17 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.ServletContext;
 
 public class ApplicationLauncher {
+
     public static void main(String[] args) throws LifecycleException {
 
+        int serverPort = 8080;
+        String portProperty = System.getProperty("server.port");
+        if (portProperty != null) {
+            serverPort = Integer.parseInt(portProperty);
+        }
+
         Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8080);
+        tomcat.setPort(serverPort);
         tomcat.getConnector();
 
         Context tomcatCtx = tomcat.addContext("", null);
@@ -30,9 +36,13 @@ public class ApplicationLauncher {
         tomcat.start();
     }
 
+
+
+
+    // tag::createApplicationContext[]
     public static WebApplicationContext createApplicationContext(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.register(Application.class);
+        ctx.register(MyBankConfiguration.class);
         ctx.setServletContext(servletContext);
         ctx.refresh();
         ctx.registerShutdownHook();

@@ -8,26 +8,35 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
 
 @Component
 public class TransactionService {
-    private List<Transaction> transactions = new CopyOnWriteArrayList<>();
+
     private final String bankSlogan;
 
-    public TransactionService(@Value("${bank.slogan}") String slogan) {
-        this.bankSlogan = slogan;
+    private List<Transaction> transactions = new CopyOnWriteArrayList<>();
+
+    public TransactionService(@Value("${bank.slogan}") String bankSlogan) {
+        this.bankSlogan = bankSlogan;
     }
 
-    public List<Transaction> findAll(){
-        return this.transactions;
+    public List<Transaction> findAll() {
+        return transactions;
     }
 
-    public Transaction create(BigDecimal amount, String reference){
+    public List<Transaction> findByReceivingUserId(String userId) {
+        return transactions.stream()
+                .filter(tx -> userId.equalsIgnoreCase(tx.getReceivingUser()))
+                .collect(Collectors.toList());
+    }
+
+    public Transaction create(BigDecimal amount, String reference, String receivingUser) {
         ZonedDateTime timestamp = ZonedDateTime.now();
-
-        Transaction transaction = new Transaction(amount,timestamp,reference,bankSlogan);
-
+        Transaction transaction = new Transaction(amount, timestamp, reference, bankSlogan, receivingUser);
         transactions.add(transaction);
         return transaction;
     }
+
 }
